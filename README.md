@@ -11,11 +11,16 @@
 > 2. Host it and set 'main.py' as the bot py file. Alternative you can run 'main.py' on your own computer to host it.
 > 3. Start guessing flags by using the command '?g' or '?guess'!
 
-##Showcase
-> ![Untitled design](https://user-images.githubusercontent.com/30962319/188285667-5a9b26e5-bf39-41dc-89b8-85804a2c9af7.png)
+## Showcase
+> ![Untitled design](https://user-images.githubusercontent.com/30962319/188285906-b31e24df-d945-431a-9456-c299db7c6dbe.png)
 
 ## Changelogs
 ### v0.0
 - Initial release.
+
+## Special Thanks
+> [Country Flags API](https://https://www.countryflagsapi.com/) for their flag image api.
+>
+> [IBAN](https://https://www.iban.com/country-codes) for their country name and codes.
 
 Feel free to contact me on discord @ Lectern#5112.
