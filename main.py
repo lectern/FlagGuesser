@@ -1,6 +1,7 @@
 # main.py
 import random
 import discord
+from discord import Interaction
 from discord.ext import commands
 from countries import country_ids
 
@@ -11,6 +12,7 @@ client = commands.Bot(
                         command_prefix="?",
                         intents=discord.Intents.all()
                         )
+client.synced = False
 
 game_on = False
 flag_ids = country_ids
@@ -21,48 +23,48 @@ correct_answer = ""
 # prints when the bot is online to console.
 @client.event
 async def on_ready():
+    await client.wait_until_ready()
+    if not client.synced:                                                                               # check if slash commands have been synced 
+        await client.tree.sync()
+        client.synced = True;
     print(f'{client.user} has connected to Discord!')
 
 # check for challenge messages
-@client.event
-async def on_message(message):
+@client.tree.command(name = 'guess', description='starts flag guessing game!')
+async def guess(interaction: Interaction,):
     global game_on, answers, correct_answer, challenge
+    
+    if interaction.user != client.user:
+        answers = []
+        game_on = True
+        country, flag_id = random.choice(list(flag_ids.items()))                                        # get country name and id
+        correct_answer = country
+        countries = list(flag_ids.keys())
+        answers = [country]
 
-    if message.author != client.user:
-        if message.content.lower() in ["?g", "?guess"]:
-            answers = []
-            game_on = True
+        for i in range(3):
+            picked_country = random.choice(countries)
+            answers += [picked_country]
+            countries.remove(picked_country)
+        random.shuffle(answers)
+        
+        embed = discord.Embed(
+            title = "Flag Guesser",
+            description = "Who does this flag belong to? React to the emoji!",
+        )
 
-            country, flag_id = random.choice(list(flag_ids.items()))                                        # get country name and id
-            correct_answer = country
+        embed.set_image(url = f"https://countryflagsapi.com/png/{flag_id}")
+        embed.add_field(name=f":one:. {answers[0]}", value=f"‎", inline=False)
+        embed.add_field(name=f":two:. {answers[1]}", value=f"‎", inline=False)
+        embed.add_field(name=f":three:. {answers[2]}", value=f"‎", inline=False)
+        embed.add_field(name=f":four:. {answers[3]}", value=f"‎", inline=False)
+        embed.set_footer(text="Developed by Lectern Dev")
 
-            countries = list(flag_ids.keys())
-            answers = [country]
+        sent_challenge = await interaction.response.send_message(embed=embed)
+        challenge = await interaction.original_response()
 
-            for i in range(3):
-                picked_country = random.choice(countries)
-
-                answers += [picked_country]
-                countries.remove(picked_country)
-            random.shuffle(answers)
-            
-            embed = discord.Embed(
-                title = "Flag Guesser",
-                description = "Who does this flag belong to? React to the emoji!",
-            )
-
-            embed.set_image(url = f"https://countryflagsapi.com/png/{flag_id}")
-
-            embed.add_field(name=f":one:. {answers[0]}", value=f"‎", inline=False)
-            embed.add_field(name=f":two:. {answers[1]}", value=f"‎", inline=False)
-            embed.add_field(name=f":three:. {answers[2]}", value=f"‎", inline=False)
-            embed.add_field(name=f":four:. {answers[3]}", value=f"‎", inline=False)
-            embed.set_footer(text="Developed by Lectern#5112")
-
-            challenge = await message.channel.send(embed=embed)                                             # send challenge
-
-            for reaction in REACTIONS:
-                await challenge.add_reaction(reaction)                                                      # add reaction for answers
+        for reaction in REACTIONS:
+            await challenge.add_reaction(reaction)                                                      # add reaction for answers
 
 @client.event
 async def on_raw_reaction_add(payload):
@@ -80,12 +82,12 @@ async def on_raw_reaction_add(payload):
             if indices[payload.emoji.name] == answers.index(correct_answer):                                # check answer
                 embed = discord.Embed(
                     title = "Flag Guesser",
-                    description = f"Correct! It was indeed `{correct_answer}`! Use `?g` to play again",
+                    description = f"Correct! It was indeed `{correct_answer}`! Use `/guess` to play again.",
                 )
             else:
                 embed = discord.Embed(
                     title = "Flag Guesser",
-                    description = f"Sorry! It was actually `{correct_answer}`! Use `?g` to play again",
+                    description = f"Sorry! It was actually `{correct_answer}`! Use `/guess` to play again.",
                 )
         
             answers = []
