@@ -12,9 +12,13 @@
 > 3. Start guessing flags by using the command '?g' or '?guess'!
 
 ## Showcase
-> ![Untitled design](https://user-images.githubusercontent.com/30962319/188285906-b31e24df-d945-431a-9456-c299db7c6dbe.png)
+> <img width="960" alt="Untitled design" src="https://user-images.githubusercontent.com/30962319/210036711-34b8efac-7a90-438f-9785-2a26654ad83a.png">
 
 ## Changelogs
+
+### v0.1
+- Add support for commands.
+
 ### v0.0
 - Initial release.
 
