@@ -19,8 +19,8 @@
 - Initial release.
 
 ## Special Thanks
-> [Country Flags API](https://https://www.countryflagsapi.com/) for their flag image api.
+> [Flagcdn.com](https://flagcdn.com/) for their flag image api.
 >
-> [IBAN](https://https://www.iban.com/country-codes) for their country name and codes.
+> [Lukes](https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes) for their country name and codes.
 
 Feel free to contact me on discord @ Lectern#5112.

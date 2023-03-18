@@ -53,7 +53,7 @@ async def guess(interaction: Interaction,):
             description = "Who does this flag belong to? React to the emoji!",
         )
 
-        embed.set_image(url = f"https://countryflagsapi.com/png/{flag_id}")
+        embed.set_image(url = f"https://flagcdn.com/w1280/{flag_id.lower()}.png")
         embed.add_field(name=f":one:. {answers[0]}", value=f"‎", inline=False)
         embed.add_field(name=f":two:. {answers[1]}", value=f"‎", inline=False)
         embed.add_field(name=f":three:. {answers[2]}", value=f"‎", inline=False)
