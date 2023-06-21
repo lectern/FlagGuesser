@@ -27,4 +27,4 @@
 >
 > [Lukes](https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes) for their country name and codes.
 
-Feel free to contact me on discord @ Lectern#5112.
+Feel free to contact me on discord @ lectern
